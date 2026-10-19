@@ -2,61 +2,49 @@ import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
 dotenv.config();
 
-const databaseUrl =
-  process.env.DATABASE_URL || process.env.DATABASE_URL_UNPOOLED;
+// Connection string ของ Cloud PostgreSQL (เช่น Neon) ใช้บน Render
+// ถ้าไม่มี จะ fallback ไปใช้ DB_* สำหรับรันในเครื่อง (local)
+const databaseURL =
+  process.env.DATABASE_URL_UNPOOLED || process.env.DATABASE_URL;
 
-if (databaseUrl) {
-  sequelize = new Sequelize(databaseUrl, {
+let sequelize;
+
+if (databaseURL) {
+  // โหมด Cloud (Render + Neon)
+  sequelize = new Sequelize(databaseURL, {
     dialect: "postgres",
-    logging: false,
+    logging: false, // ปิดการพิมพ์ SQL ดิบใน console
     dialectOptions: {
-      ssl:
-        process.env.DB_SSL === "false"
-          ? false
-          : {
-              require: true,
-              rejectUnauthorized: false,
-            },
+      ssl: { require: true, rejectUnauthorized: false }, // Cloud DB ส่วนใหญ่บังคับ SSL
     },
   });
-} else {
-  const host = process.env.DB_HOST || "localhost";
-  const port = process.env.DB_PORT || 5432;
-  const dialectOptions =
-    process.env.DB_SSL === "true"
-      ? {
-          ssl: {
-            require: true,
-            rejectUnauthorized: false,
-          },
-        }
-      : {};
-
-  sequelize = new Sequelize(
-    process.env.DB_NAME || "books_db",
-    process.env.DB_USER || "postgres",
-    process.env.DB_PASSWORD || "",
-    {
-      host,
-      port,
-      dialect: "postgres",
-      logging: false,
-      dialectOptions,
-    },
-  );
 }
+// else {
+//   // โหมด Local
+//   sequelize = new Sequelize(
+//     process.env.DB_NAME,
+//     process.env.DB_USER,
+//     process.env.DB_PASSWORD,
+//     {
+//       host: process.env.DB_HOST,
+//       port: process.env.DB_PORT,
+//       dialect: "postgres",
+//       logging: false,
+//     },
+//   );
+// }
 
 const connectDB = async () => {
   try {
     await sequelize.authenticate();
-    console.log("Connected to PostgreSQL successfully!");
+    console.log("Connected to PostgreSQL!");
     await sequelize.sync({
       alter: process.env.NODE_ENV === "development",
     });
-    console.log("Database & Tables Synchronized!");
+    console.log("Table Synchronized!");
   } catch (error) {
-    console.error("Database connection failed:", error.message);
-    throw error;
+    console.error("Connection failed", error);
+    process.exit(1);
   }
 };
 
