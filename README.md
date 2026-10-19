@@ -1,6 +1,6 @@
 > 🌐 **Frontend (Vercel):** https://674259025-7153403-final-a.vercel.app/books
    ![สถานะ deploy สำเร็จบน vercel](screenshots/Screenshot%202026-10-19%20164510.png)
-> ⏱️ บริการฟรีอาจพักตัว เปิดครั้งแรกอาจใช้เวลา ~50 วินาที
+
 > 🔌 **Backend API (Render):** https://six74259025-7153403-final-a.onrender.com
    ![สถานะ deploy สำเร็จบน render](screenshots/Screenshot%202026-10-19%20165019.png)
 
