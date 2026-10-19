@@ -1,6 +1,10 @@
 > 🌐 **Frontend (Vercel):** https://674259025-7153403-final-a.vercel.app/books
 > 🔌 **Backend API (Render):** https://six74259025-7153403-final-a.onrender.com
 > ⏱️ บริการฟรีอาจพักตัว เปิดครั้งแรกอาจใช้เวลา ~50 วินาที
+   ![สถานะ deploy สำเร็จบน vercel](screenshots/Screenshot%202026-10-19%20164510.png)
+
+
+   ![สถานะ deploy สำเร็จบน render](screenshots/Screenshot%202026-10-19%20165019.png)
 
 # รายงานและคู่มือระบบจัดการหนังสือ (Books Management System)
 ### ข้อสอบปลายภาค รายวิชา 7153403 เทคโนโลยีการบริการเว็บ ภาคเรียนที่ 1 ปีการศึกษา 2569
