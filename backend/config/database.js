@@ -2,10 +2,11 @@ import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
 dotenv.config();
 
-let sequelize;
+const databaseUrl =
+  process.env.DATABASE_URL || process.env.DATABASE_URL_UNPOOLED;
 
-if (process.env.DATABASE_URL) {
-  sequelize = new Sequelize(process.env.DATABASE_URL, {
+if (databaseUrl) {
+  sequelize = new Sequelize(databaseUrl, {
     dialect: "postgres",
     logging: false,
     dialectOptions: {
